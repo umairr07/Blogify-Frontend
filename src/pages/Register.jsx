@@ -1,7 +1,59 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { URL } from "../utils/url";
+import { handleSuccess } from "../utils/Toast";
+import { ToastContainer } from "react-toastify";
 
 const Register = () => {
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  // console.log(username, email, password);
+
+  const handleRegisteration = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:10000/api/v1/auth/register",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      setUserName(data.user.username);
+      setEmail(data.user.email);
+      setPassword(data.user.password);
+
+      console.log(data);
+
+      setUserName("");
+      setEmail("");
+      setPassword("");
+
+      if (response.ok) {
+        handleSuccess(data.message);
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="flex min-h-[80vh] items-center justify-center">
@@ -20,8 +72,8 @@ const Register = () => {
                 type="text"
                 id="username"
                 name="username"
-                // value={userData.username}
-                // onChange={handleChange}
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                 placeholder="Enter your username"
               />
@@ -38,8 +90,8 @@ const Register = () => {
                 type="email"
                 id="email"
                 name="email"
-                // value={userData.email}
-                // onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                 placeholder="Enter your email (original)"
               />
@@ -56,8 +108,8 @@ const Register = () => {
                 type="password"
                 id="password"
                 name="password"
-                // value={userData.password}
-                // onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                 placeholder="Enter your password"
               />
@@ -66,7 +118,7 @@ const Register = () => {
             <button
               type="submit"
               className="w-full bg-black border-2 text-white py-2 px-4 rounded-md hover:bg-white hover:text-black hover:border-black transition duration-300"
-              //   onClick={handleSignup}
+              onClick={handleRegisteration}
             >
               Sign Up
             </button>
@@ -88,6 +140,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

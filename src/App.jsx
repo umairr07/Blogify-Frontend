@@ -7,6 +7,8 @@ import Register from "./pages/Register";
 import PostDetails from "./pages/PostDetails";
 import CreatePost from "./pages/CreatePost";
 import EditPost from "./pages/EditPost";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const App = () => {
   return (
@@ -21,6 +23,7 @@ export const App = () => {
         <Route exact path="/edit/:id" element={<EditPost />} />
       </Routes>
       <Footer />
+      <ToastContainer />
     </div>
   );
 };

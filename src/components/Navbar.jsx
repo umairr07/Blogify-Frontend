@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 
 const Navbar = () => {
-  const user = true;
+  const user = false;
   return (
     <div>
       <div className="flex items-center justify-between px-6 md:px-[200px] py-4">
