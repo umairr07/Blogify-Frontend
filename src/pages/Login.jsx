@@ -29,9 +29,6 @@ const Login = () => {
       if (res.ok) {
         handleSuccess(data.message);
         navigate("/");
-        // setTimeout(() => {
-        //
-        // }, 1500);
       }
     } catch (error) {
       console.log(error);
