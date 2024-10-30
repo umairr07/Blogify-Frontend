@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { handleSuccess } from "../utils/Toast.jsx";
+import { UserContext } from "../context/UserContext.jsx";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -21,7 +24,7 @@ const Login = () => {
       });
 
       const data = await res.json();
-      console.log(data);
+      setUser(data);
 
       setEmail("");
       setPassword("");

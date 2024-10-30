@@ -9,20 +9,25 @@ import CreatePost from "./pages/CreatePost";
 import EditPost from "./pages/EditPost";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserContextProvider } from "./context/UserContext";
+import UserProfile from "./pages/UserProfile";
 
 export const App = () => {
   return (
     <div>
-      <Navbar />
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/register" element={<Register />} />
-        <Route exact path="/post/posts/:id" element={<PostDetails />} />
-        <Route exact path="/create" element={<CreatePost />} />
-        <Route exact path="/edit/:id" element={<EditPost />} />
-      </Routes>
-      <Footer />
+      <UserContextProvider>
+        <Navbar />
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/register" element={<Register />} />
+          <Route exact path="/post/posts/:id" element={<PostDetails />} />
+          <Route exact path="/create" element={<CreatePost />} />
+          <Route exact path="/edit/:id" element={<EditPost />} />
+          <Route exact path="/userdetails" element={<UserProfile />} />
+        </Routes>
+        <Footer />
+      </UserContextProvider>
       <ToastContainer />
     </div>
   );
