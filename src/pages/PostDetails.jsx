@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Comment from "../components/Comment";
 import { UserContext } from "../context/UserContext";
+import { handleSuccess } from "../utils/Toast.jsx";
 
 const PostDetails = () => {
   const [posts, setPosts] = useState(null);
@@ -63,7 +64,19 @@ const PostDetails = () => {
         }),
       });
       const data = await res.json();
-      console.log(data);
+      if (res.ok) {
+        // Add new comment to the comments array
+        setComments((prevComments) => [
+          ...prevComments,
+          {
+            _id: data.comment._id,
+            comment: inputComment,
+            author: user.user.username,
+            updatedAt: data.comment.updatedAt,
+          },
+        ]);
+        setInputComment("");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -95,6 +108,7 @@ const PostDetails = () => {
         <div>
           <div className="w-full flex flex-col mt-4 md:flex-row">
             <input
+              value={inputComment}
               onChange={(e) => setInputComment(e.target.value)}
               type="text"
               placeholder="Write a comment"
