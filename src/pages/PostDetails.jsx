@@ -84,13 +84,21 @@ const PostDetails = () => {
 
   return (
     <div>
-      <div>
+      <div className="flex flex-col border-2 border-black p-5 justify-center items-center gap-5 m-auto">
         <div>
-          <img src={posts?.postDetails?.photo} alt="" />
+          <p>{posts?.postDetails?.title}</p>
+        </div>
+
+        <div>
+          <img
+            src={posts?.postDetails?.photo}
+            alt=""
+            className=" w-[900px] h-[400px] rounded-lg object-cover"
+          />
         </div>
 
         {/* description */}
-        <div>
+        <div className=" w-[900px] ">
           <p>{posts?.postDetails?.desc}</p>
         </div>
 
